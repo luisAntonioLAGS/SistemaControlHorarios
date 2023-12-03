@@ -16,7 +16,7 @@ if ($admin["perfil"] !== "Administrador") {
         </div>
         <div class="col-6">
           <ol class="breadcrumb">
-            <a href="pdf/reporte-inventario.php" target="blank"> <button class="btn btn-pill btn-success btn-lg" type="button">IMPRIMIR <i data-feather="printer"></i></button> </a>
+            <a class="imprimirReportes" href="pdf/reporte-inventario.php" target="blank"> <button class="btn btn-pill btn-success btn-lg" type="button" title="Seleccione los reportes que desee imprimir, o bien no seleccione ningún elemento para imprimir todo">IMPRIMIR <i data-feather="printer"></i></button> </a>
           </ol>
         </div>
       </div>
@@ -35,32 +35,42 @@ if ($admin["perfil"] !== "Administrador") {
               <table class="display tablas" id="responsive">
                 <thead>
                   <tr>
-                    <th>N°</th>
-                    <th>Equipo</th>
-                    <th>Sala</th>
-                    <th>Detalle / Imprimir</th>
-                    <th>Acciones</th>
+                    <th class="center">Seleccionar / N°</th>
+                    <th class="center">Equipo</th>
+                    <th class="center">Sala</th>
+                    <th class="center">Detalle / Imprimir</th>
+                    <th class="center">Acciones</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="equiposTableBody">
                   <?php $equipos = ControladorEquipos::ctrMostrarEquipos(null, null);
                   foreach ($equipos as $key => $value) :
 
                     $idSala = $value["id_sala"];
                     $sala = ControladorSalas::ctrMostrarSalas("id", $idSala);
 
-                    $mas = '<div class="btn-group" role="group">
-                      <a href="index.php?pagina=equipo&id=' . $value[0] . '"> <button class="btn btn-pill btn-primary btn-lg" type="button"><i data-feather="monitor"></i></button> </a>
-                      <a href="pdf/reporte-equipo.php?&id=' . $value[0] . '" target="blank"> <button class="btn btn-pill btn-success btn-lg" type="button"><i data-feather="printer"></i></button> </a>
-                    </div>';
+                    $mas = '<div class="btn-group d-flex justify-content-center" role="group">
+                            <a href="index.php?pagina=equipo&id=' . $value[0] . '"> 
+                            <button class="btn btn-pill btn-primary btn-lg" type="button"><i data-feather="monitor"></i></button>
+                            </a>
+                            <a href="pdf/reporte-equipo.php?&id=' . $value[0] . '" target="blank"> 
+                              <button class="btn btn-pill btn-success btn-lg" type="button"><i data-feather="printer"></i></button>
+                            </a>
+                          </div>';
 
-                    $actions = '<div class="btn-group btn-group-pill" role="group">
-                      <button class="btn btn-warning editarEquipo" idEquipo="' . $value["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#modalEditarEquipo" data-whatever="@getbootstrap">Editar</button>
-                      <button class="btn btn-danger eliminarEquipo" idEquipo="' . $value["id"] . '" type="button" data-bs-original-title="" title="">Eliminar</button>
+                    $actions = '<div class="btn-group btn-group-pill d-flex justify-content-center" role="group">
+                      <button class="btn btn-warning editarEquipo" idEquipo="' . $value["id"] . '" type="button" data-bs-toggle="modal" data-bs-target="#modalEditarEquipo" data-whatever="@getbootstrap"><i class="fa-solid fa-pen-to-square"></i> Editar</button>
+                      <button class="btn btn-danger eliminarEquipo" idEquipo="' . $value["id"] . '" type="button" data-bs-original-title="" title=""><i class="fa-regular fa-trash-can"></i> Eliminar</button>
                     </div>';
                   ?>
                     <tr>
-                      <td><?= ($key + 1) ?> </td>
+                      <td>
+                        <div class="form-check">
+                          <input class="form-check-input seleccionarEquipo" name="seleccionarEquipo" type="checkbox" value="<?= $value["id"]; ?>" style="height: 1em; width: 1em;">
+                          <label class="form-check-label" for="flexCheckChecked"><?= ($key + 1) ?></label>
+                        </div>
+                      </td>
+
                       <td><?= $value["equipo"] ?></td>
                       <td><?= $sala["sala"] ?></td>
                       <td><?= $mas ?></td>
@@ -519,7 +529,39 @@ GUARDAR EQUIPO
       console.log(error);
 
     }
-  })
+  });
+
+  /*=============================================
+  IMPRIMIR LOS REPORTES SELECCIONADOS
+  =============================================*/
+  $(document).ready(function() {
+    $(document).on("click", ".imprimirReportes", function(e) {
+      e.preventDefault();
+      $('#responsive').DataTable().destroy();
+
+      let equiposSeleccionados = [];
+      $("#equiposTableBody tr").each(function() {
+        const fila = $(this);
+        if ($(this).find(".seleccionarEquipo:checked").length > 0) {
+          const id = fila.find('input[name="seleccionarEquipo"]').val();
+          const valorCheckbox = $(this).find('input[name="seleccionarEquipo"]').val();
+          //console.log("Valor del checkbox seleccionado:", valorCheckbox);
+          equiposSeleccionados.push(valorCheckbox);
+        }
+      });
+
+      // Construir la URL con los equipos seleccionados
+      equiposSeleccionados = equiposSeleccionados.length > 0 ? equiposSeleccionados.join(',') : 'all';
+      const url = `pdf/reporte-inventario.php?equipos=${equiposSeleccionados}`;
+      //console.log(equiposSeleccionados);
+      // Abrir la URL en una nueva pestaña
+      window.open(url, '_blank');
+
+      $('#responsive').DataTable({
+        responsive: true
+      });
+    });
+  });
 
   /*=============================================
   MOSTRAR DATOS DEL EQUIPO EN LA VENTANA MODAL
@@ -627,7 +669,7 @@ GUARDAR EQUIPO
       console.log(error);
 
     }
-  })
+  });
 
   /*=============================================
   Eliminar Equipo
@@ -692,5 +734,5 @@ GUARDAR EQUIPO
 
     })
 
-  })
+  });
 </script>

@@ -148,7 +148,7 @@ $(document).ready(function(){
     } );
     $('#responsive').DataTable( {
         responsive: true
-    } );
+    });
     var table = $('#new-cons').DataTable();
 // new $.fn.dataTable.Responsive( table );
     $('#show-hidden-row').DataTable( {

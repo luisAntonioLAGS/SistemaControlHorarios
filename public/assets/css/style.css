@@ -33181,3 +33181,6 @@ html[dir="rtl"] body.dark-only .page-wrapper .page-body-wrapper .page-body .card
     }
 }
  
+.center{
+    text-align: center;
+}
