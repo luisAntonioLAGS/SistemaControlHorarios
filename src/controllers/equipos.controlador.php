@@ -35,14 +35,7 @@ class ControladorEquipos{
 
 	public function ctrRegistroEquipo($datos){
 
-		if(isset($datos["registroEquipo"])){
-
-			$datos = array(
-				"equipo" => $datos["registroEquipo"],
-				"sala" => $datos["registroSala"],
-				"observacion" => $datos["registroObservacion"],
-				"estado" =>  $datos["registroEstado"]
-			);
+		if(isset($datos["equipo"])){
 
 			$respuesta = ModeloEquipos::mdlRegistroEquipo($datos);
 			
@@ -63,15 +56,7 @@ class ControladorEquipos{
 
 	public function ctrEditarEquipo($datos){
 
-		if(isset($datos["editarId"])){
-
-			$datos = array(
-				"id"=> $datos["editarId"],
-				"equipo" => $datos["editarEquipo"],
-				"sala" => $datos["editarSala"],
-				"observacion" => $datos["editarObservacion"],
-				"estado" =>  $datos["editarEstado"]
-			);
+		if(isset($datos["id"])){
 	
 			$respuesta = ModeloEquipos::mdlEditarEquipo($datos);
 				

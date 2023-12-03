@@ -23,7 +23,7 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-header">
-            <button class="btn btn-pill btn-success" type="button" data-bs-toggle="modal" data-bs-target="#crearSala" data-whatever="@getbootstrap" > <i class="icon-plus"></i> Agregar</button>          
+            <button class="btn btn-pill btn-success" type="button" data-bs-toggle="modal" data-bs-target="#nuevoEquipo" data-whatever="@getbootstrap" > <i class="icon-plus"></i> AGREGAR EQUIPO</button>          
           </div>
           <div class="card-body">
             <div>
@@ -49,7 +49,7 @@
                       $sala = ControladorSalas::ctrMostrarSalas("id", $idSala);
 
                       $actions = '<div class="btn-group btn-group-pill" role="group">
-                        <button class="btn btn-warning editarEquipo" idEquipo="'.$value["id"].'" type="button" data-bs-toggle="modal" data-bs-target="#editarEquipo" data-whatever="@getbootstrap">Editar</button>
+                        <button class="btn btn-warning editarEquipo" idEquipo="'.$value["id"].'" type="button" data-bs-toggle="modal" data-bs-target="#modalEditarEquipo" data-whatever="@getbootstrap">Editar</button>
                         <button class="btn btn-danger eliminarEquipo" idEquipo="'.$value["id"].'" type="button" data-bs-original-title="" title="">Eliminar</button>
                       </div>';	
 
@@ -81,66 +81,199 @@
 </div>
 
 <!-- MODAL GUARDAR EQUIPO -->
-<div class="modal fade" id="crearSala" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="nuevoEquipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <h5 class="modal-title">Agregar Equipos</h5>
+      <div class="modal-header color-blue">
+        <h5 class="modal-title">NUEVO EQUIPO</h5>
         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" id="formGuardarEquipo">   
         <div class="modal-body">
           <div class="card-body">
             <div class="row">
-              <div class="col-md-12">
-                  <div class="mb-3 m-form__group">
-                      <label class="form-label">Equipo</label>
-                      <div class="input-group"><span class="input-group-text"> <i class="fas fa-laptop"></i> </span>
-                        <input type="text" class="form-control" name="registroEquipo" placeholder="Equipo" autocomplete="off" required>
-                      </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Sala</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fas fa-laptop-house"></i> </span>
+                    <select class="form-control" name="registroSala" required>
+                      <option value="">Selecione una sala</option>
+                      <?php
+                        $sala = ControladorSalas::ctrMostrarSalas(null, null);
+                        foreach ($sala as $key => $value) : 
+                      ?>
+                      <option value="<?= $value["id"] ?>"> <?= $value["sala"] ?> </option>
+                      <?php endforeach ?>
+                    </select>
                   </div>
-                
-                  <div class="mb-3 m-form__group">
-                      <label class="form-label">Sala</label>
-                      <div class="input-group"><span class="input-group-text"> <i class="fas fa-laptop-house"></i> </span>
-                        <select class="form-control" name="registroSala" required>
-                          <option value="">Selecione una sala</option>
-                          <?php
-                            $sala = ControladorSalas::ctrMostrarSalas(null, null);
-                            foreach ($sala as $key => $value) : 
-                          ?>
-                          <option value="<?= $value["id"] ?>"> <?= $value["sala"] ?> </option>
-                          <?php endforeach ?>
-                        </select>
-                      </div>
-                  </div> 
-                  
-                  <div class="mb-3 m-form__group">
-                      <label class="form-label">Estado</label>
-                      <div class="input-group"><span class="input-group-text"> <i class="fas fa-check-circle"></i> </span>
-                        <select class="form-control" name="registroEstado" required>
-                          <option value="Operativo">Operativo</option>
-                          <option value="Inoperativo">Inoperativo</option>
-                        </select>
-                      </div>
-                  </div>  
-
-                  <div class="mb-3 m-form__group">
-                      <label class="form-label">Observación</label>
-                      <div class="input-group"><span class="input-group-text"> <i class="fas fa-align-center"></i> </span>
-                        <textarea class="form-control" name="registroObservacion"></textarea>
-                      </div>
-                  </div>  
-
+                </div> 
               </div>
 
-              
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Código</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="registroEquipo" placeholder="Código del Equipo" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 mb-3">
+                <div class="alert alert-dark inverse alert-dismissible fade show" role="alert"><i class="fa-solid fa-keyboard"></i>
+                  <p><b> Teclado </b></p>
+                </div>
+              </div>
+                
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Serie</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="serieTeclado" placeholder="Serie del Teclado" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Modelo</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="modeloTeclado" placeholder="Modelo del Teclado" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 mb-3">
+                <div class="alert alert-dark inverse alert-dismissible fade show" role="alert"><i class="fa-solid fa-computer-mouse"></i>
+                  <p><b> Mouse </b></p>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Serie</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="serieMouse" placeholder="Serie del Mouse" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Modelo</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="modeloMouse" placeholder="Modelo del Mouse" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 mb-3">
+                <div class="alert alert-dark inverse alert-dismissible fade show" role="alert"><i class="fa-solid fa-desktop"></i>
+                  <p><b> Pantalla </b></p>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Serie</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="seriePantalla" placeholder="Serie de la Pantalla" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Modelo</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="modeloPantalla" placeholder="Modelo de la Pantalla" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 mb-3">
+                <div class="alert alert-dark inverse alert-dismissible fade show" role="alert"><i class="fa-solid fa-server"></i>
+                  <p><b> CPU </b></p>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Serie</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="serieCpu" placeholder="Serie del Cpu" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Modelo</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="modeloCpu" placeholder="Modelo del Cpu" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Adaptador de Red</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fa-solid fa-network-wired"></i> </span>
+                    <input type="text" class="form-control" name="adaptadorRed" placeholder="Adaptador de Red" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">RAM</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fa-solid fa-memory"></i> </span>
+                    <input type="text" class="form-control" name="ram" placeholder="RAM" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Procesador</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fa-solid fa-microchip"></i> </span>
+                    <input type="text" class="form-control" name="procesador" placeholder="Procesador" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Disco Duro</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fa-solid fa-hard-drive"></i> </span>
+                    <input type="text" class="form-control" name="disco" placeholder="Disco Duro" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">CD ROM</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fa-solid fa-compact-disc"></i> </span>
+                    <input type="text" class="form-control" name="cd" placeholder="CD ROM" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6"> 
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Observación</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fas fa-align-center"></i> </span>
+                    <input type="text" class="form-control" name="observacion" placeholder="Observacion" autocomplete="off">
+                  </div>
+                </div>  
+              </div>
             </div>
           </div>               
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
-          <button class="btn btn-primary" type="submit">Guardar</button>
+          <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cerrar</button>
+          <button class="btn color-blue" type="submit">Guardar</button>
         </div>
 
       </form>
@@ -148,69 +281,201 @@
   </div>
 </div>
 
-<!-- MODAL EDITAR SALA -->
-<div class="modal fade" id="editarEquipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<!-- MODAL EDITAR EQUIPO -->
+<div class="modal fade" id="modalEditarEquipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <h5 class="modal-title">Editar Equipo</h5>
+      <div class="modal-header color-blue">
+        <h5 class="modal-title">EDITAR EQUIPO</h5>
         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" id="formEditarEquipo">   
         <div class="modal-body">
           <div class="card-body">
             <div class="row">
-              <div class="col-md-12">
-                  <div class="mb-3 m-form__group">
-                      <label class="form-label">Equipo</label>
-                      <div class="input-group"><span class="input-group-text"> <i class="fas fa-laptop"></i> </span>
-                        <input type="text" class="form-control" name="editarEquipo" placeholder="Equipo" autocomplete="off" required>
-                        <input type="hidden" class="form-control" name="editarId" required>
-                      </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Sala</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fas fa-laptop-house"></i> </span>
+                    <select class="form-control" name="editarSala" required>
+                      <option class="editarSalaOption"></option>
+                      <?php
+                        $sala = ControladorSalas::ctrMostrarSalas(null, null);
+                        foreach ($sala as $key => $value) : 
+                      ?>
+                      <option value="<?= $value["id"] ?>"> <?= $value["sala"] ?> </option>
+                      <?php endforeach ?>
+                    </select>
                   </div>
-                
-                  <div class="mb-3 m-form__group">
-                      <label class="form-label">Sala</label>
-                      <div class="input-group"><span class="input-group-text"> <i class="fas fa-laptop-house"></i> </span>
-                        <select class="form-control" name="editarSala" required>
-                          <option class="editarSalaOption"></option>
-                          <?php
-                            $sala = ControladorSalas::ctrMostrarSalas(null, null);
-                            foreach ($sala as $key => $value) : 
-                          ?>
-                          <option value="<?= $value["id"] ?>"> <?= $value["sala"] ?> </option>
-                          <?php endforeach ?>
-                        </select>
-                      </div>
-                  </div> 
-                  
-                  <div class="mb-3 m-form__group">
-                      <label class="form-label">Estado</label>
-                      <div class="input-group"><span class="input-group-text"> <i class="fas fa-check-circle"></i> </span>
-                        <select class="form-control" name="editarEstado" required>
-                          <option class="editarEstadoOption"></option>
-                          <option value="Operativo">Operativo</option>
-                          <option value="Inoperativo">Inoperativo</option>
-                        </select>
-                      </div>
-                  </div>  
-
-                  <div class="mb-3 m-form__group">
-                      <label class="form-label">Observación</label>
-                      <div class="input-group"><span class="input-group-text"> <i class="fas fa-align-center"></i> </span>
-                        <input type="text" class="form-control" name="editarObservacion" placeholder="Observacion" autocomplete="off">
-                      </div>
-                  </div>  
-
+                </div> 
               </div>
 
-              
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Código</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="editarEquipo" placeholder="Código del Equipo" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 mb-3">
+                <div class="alert alert-dark inverse alert-dismissible fade show" role="alert"><i class="fa-solid fa-keyboard"></i>
+                  <p><b> Teclado </b></p>
+                </div>
+              </div>
+                
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Serie</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="editarSerieTeclado" placeholder="Serie del Teclado" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Modelo</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="editarModeloTeclado" placeholder="Modelo del Teclado" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 mb-3">
+                <div class="alert alert-dark inverse alert-dismissible fade show" role="alert"><i class="fa-solid fa-computer-mouse"></i>
+                  <p><b> Mouse </b></p>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Serie</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="editarSerieMouse" placeholder="Serie del Mouse" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Modelo</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="editarModeloMouse" placeholder="Modelo del Mouse" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 mb-3">
+                <div class="alert alert-dark inverse alert-dismissible fade show" role="alert"><i class="fa-solid fa-desktop"></i>
+                  <p><b> Pantalla </b></p>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Serie</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="editarSeriePantalla" placeholder="Serie de la Pantalla" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Modelo</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="editarModeloPantalla" placeholder="Modelo de la Pantalla" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 mb-3">
+                <div class="alert alert-dark inverse alert-dismissible fade show" role="alert"><i class="fa-solid fa-server"></i>
+                  <p><b> CPU </b></p>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Serie</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="editarSerieCpu" placeholder="Serie del Cpu" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Modelo</label>
+                  <div class="input-group"><span class="input-group-text"> <i data-feather="code"></i> </span>
+                    <input type="text" class="form-control" name="editarModeloCpu" placeholder="Modelo del Cpu" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Adaptador de Red</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fa-solid fa-network-wired"></i> </span>
+                    <input type="text" class="form-control" name="editarAdaptadorRed" placeholder="Adaptador de Red" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">RAM</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fa-solid fa-memory"></i> </span>
+                    <input type="text" class="form-control" name="editarRam" placeholder="RAM" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Procesador</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fa-solid fa-microchip"></i> </span>
+                    <input type="text" class="form-control" name="editarProcesador" placeholder="Procesador" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Disco Duro</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fa-solid fa-hard-drive"></i> </span>
+                    <input type="text" class="form-control" name="editarDisco" placeholder="Disco Duro" autocomplete="off" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">CD ROM</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fa-solid fa-compact-disc"></i> </span>
+                    <input type="text" class="form-control" name="editarCd" placeholder="CD ROM" autocomplete="off" required>
+                    <input type="hidden" class="form-control" name="editarId" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6"> 
+                <div class="mb-3 m-form__group">
+                  <label class="form-label">Observación</label>
+                  <div class="input-group"><span class="input-group-text"> <i class="fas fa-align-center"></i> </span>
+                    <input type="text" class="form-control" name="editarObservacion" placeholder="Observacion" autocomplete="off">
+                  </div>
+                </div>  
+              </div>
             </div>
           </div>               
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
-          <button class="btn btn-primary" type="submit">Guardar</button>
+          <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cerrar</button>
+          <button class="btn color-blue" type="submit">Guardar</button>
         </div>
 
       </form>
@@ -306,9 +571,21 @@ $(document).on("click", ".editarEquipo", function(){
 
       $('input[name="editarId"]').val(respuesta["id"]);
       $('input[name="editarEquipo"]').val(respuesta["equipo"]);
+      $('input[name="editarSerieTeclado"]').val(respuesta["serie_teclado"]);
+      $('input[name="editarModeloTeclado"]').val(respuesta["modelo_teclado"]);
+      $('input[name="editarSerieMouse"]').val(respuesta["serie_mouse"]);
+      $('input[name="editarModeloMouse"]').val(respuesta["modelo_mouse"]);
+      $('input[name="editarSeriePantalla"]').val(respuesta["serie_pantalla"]);
+      $('input[name="editarModeloPantalla"]').val(respuesta["modelo_pantalla"]);
+      $('input[name="editarSerieCpu"]').val(respuesta["serie_cpu"]);
+      $('input[name="editarModeloCpu"]').val(respuesta["modelo_cpu"]);
+      $('input[name="editarAdaptadorRed"]').val(respuesta["adaptador_red"]);
+      $('input[name="editarRam"]').val(respuesta["ram"]);
+      $('input[name="editarProcesador"]').val(respuesta["procesador"]);
+      $('input[name="editarDisco"]').val(respuesta["disco_duro"]);
+      $('input[name="editarCd"]').val(respuesta["cd_rom"]);
       $('input[name="editarObservacion"]').val(respuesta["observacion"]);
-      $('.editarEstadoOption').val(respuesta["status"]);
-      $('.editarEstadoOption').html(respuesta["status"]);
+  
 
     }
 

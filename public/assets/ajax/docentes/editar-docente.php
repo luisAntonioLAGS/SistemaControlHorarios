@@ -7,6 +7,7 @@ $datos = array(
     "cedula"  => $_POST["cedulaEditar"],
     "nombre"  => $_POST["nombreEditar"],
     "titulo"        => $_POST["tituloEditar"],
+    "email"        => $_POST["emailEditar"],
     "carrera"    => $_POST["carreraEditar"]
     
 );

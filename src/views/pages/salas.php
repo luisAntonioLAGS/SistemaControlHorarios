@@ -30,15 +30,17 @@
                     <th>N°</th>
                     <th>Sala</th>
                     <th>Estado</th>
+                    <?php if($admin["perfil"] == "Administrador") : ?>
+                      <th>Acciones</th>
+                    <?php endif ?>
                 </thead>
                 <tbody>
                   <?php $salas = ControladorSalas::ctrMostrarSalas(null, null);
 
                     foreach ($salas as $key => $value):
 
-                    $actions = '<div class="btn-group btn-group-pill" role="group">
-                      <button class="btn btn-warning editarSala" idSala="'.$value["id"].'" type="button" data-bs-toggle="modal" data-bs-target="#editarSala" data-whatever="@getbootstrap">HORARIO</button>
-                      
+                    $actions = '<div class="btn-group" role="group">
+                      <button class="btn btn-primary editarSala" idSala="'.$value["id"].'" type="button" data-bs-toggle="modal" data-bs-target="#editarSala" data-whatever="@getbootstrap">EDITAR</button>
                     </div>';	
 
                   ?>
@@ -51,6 +53,10 @@
                         <td><span class="btn btn-success btn-xs">Disponible</span></td>
                       <?php elseif($value["status"] == 'Ocupada'): ?>
                         <td><span class="btn btn-danger btn-xs">Ocupada</span></td>
+                    <?php endif ?>
+
+                    <?php if($admin["perfil"] == "Administrador") : ?>
+                      <td><?= $actions ?></td>
                     <?php endif ?>
                    
                   </tr>
@@ -66,12 +72,12 @@
   </div>
 </div>
 
-<!-- MODAL GUARDAR SALA -->
+<!-- MODAL CREAR SALA -->
 <div class="modal fade" id="crearSala" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <h5 class="modal-title">Agregar Sala</h5>
+      <div class="modal-header color-blue">
+        <h5 class="modal-title">EDITAR SALA</h5>
         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" id="formGuardarSala">   
@@ -101,16 +107,57 @@
           </div>               
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
-          <button class="btn btn-primary" type="submit">Guardar</button>
+          <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cerrar</button>
+          <button class="btn color-blue" type="submit">Guardar</button>
         </div>
-
       </form>
     </div>
   </div>
 </div>
 
-
+<!-- MODAL EDITAR SALA -->
+<div class="modal fade" id="editarSala" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header color-blue">
+        <h5 class="modal-title">EDITAR SALA</h5>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" id="formEditarSala">   
+        <div class="modal-body">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                  <div class="mb-3 m-form__group">
+                      <label class="form-label">Sala</label>
+                      <div class="input-group"><span class="input-group-text"> <i style="font-size:18px" class="fas fa-laptop-house"></i> </span>
+                        <input type="text" class="form-control" name="editarSala" placeholder="Nombre de la sala" autocomplete="off" readonly required>
+                        <input type="hidden" class="form-control" name="idSala">
+                      </div>
+                  </div>
+                
+                  <div class="mb-3 m-form__group">
+                      <label class="form-label">Statu</label>
+                      <div class="input-group"><span class="input-group-text"> <i class="fas fa-check-circle"></i> </span>
+                        <select class="form-control" name="editarEstado" required>
+                          <option class="editarEstadoOption"></option>
+                          <option value="Disponible">Disponible</option>
+                          <option value="Ocupada">Ocupada</option>
+                        </select>
+                      </div>
+                  </div>  
+              </div>
+            </div>
+          </div>               
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cerrar</button>
+          <button class="btn color-blue" type="submit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <script>
 
@@ -187,17 +234,17 @@ $(document).on("click", ".editarSala", function(){
 })
 
 /*=============================================
-GUARDAR HORARIO
+EDITAR SALA
 =============================================*/
-const formGuardarHorario = document.getElementById('formGuardarHorario');
+const formEditarSala = document.getElementById('formEditarSala');
 
-formGuardarHorario.addEventListener('submit', async (e) => {
+formEditarSala.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  let datos = new FormData(formGuardarHorario);
+  let datos = new FormData(formEditarSala);
 
   try {
-    const post = await 	fetch('public/assets/ajax/horarios/guardar-horario.php', {
+    const post = await 	fetch('public/assets/ajax/salas/editar-sala.php', {
       method: 'POST',
       body: datos
     })
@@ -208,16 +255,16 @@ formGuardarHorario.addEventListener('submit', async (e) => {
 
     if(resPost.ok){
 
-      Swal.fire(
-        'Correcto!',
-        'Los datos han sido guardados con éxito!',
-        'success'
-      ).then(function(result){
+        Swal.fire(
+          'Correcto!',
+          'Los datos han sido actualizados con éxito!',
+          'success'
+        ).then(function(result){
 
-        if(result.value){   
-        window.location = "salas";
-        } 
-      });
+          if(result.value){   
+            window.location = "salas";
+          } 
+        });
     }
         
   } catch (error) {
@@ -225,6 +272,8 @@ formGuardarHorario.addEventListener('submit', async (e) => {
         
   }
 })
+
+
 
 /*=============================================
 Eliminar Sala

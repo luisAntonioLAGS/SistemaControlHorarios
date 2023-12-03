@@ -22,6 +22,23 @@ class AjaxDocentes{
 
 	}
 
+	/*=============================================
+	VALIDAR NO REPETIR CEDULA
+	=============================================*/	
+
+	public $validarCedula;
+
+	public function ajaxValidarCedula(){
+
+		$item = "cedula";
+		$valor = $this->validarCedula;
+
+		$respuesta = ControladorDocentes::ctrMostrarDocentes($item, $valor);
+
+		echo json_encode($respuesta);
+
+    }
+
 	
 	/*=============================================
 	Eliminar Docente
@@ -47,6 +64,18 @@ if(isset($_POST["idDocente"])){
 	$editar = new AjaxDocentes();
 	$editar -> idDocente = $_POST["idDocente"];
 	$editar -> ajaxMostrarDocentes();
+
+}
+
+/*=============================================
+VALIDAR NO REPETIR CEDULA
+=============================================*/
+
+if(isset( $_POST["validarCedula"])){
+
+	$valCedula = new AjaxDocentes();
+	$valCedula -> validarCedula = $_POST["validarCedula"];
+	$valCedula -> ajaxValidarCedula();
 
 }
 

@@ -46,6 +46,23 @@ class AjaxAdministradores{
 	}
 
 	/*=============================================
+	VALIDAR NO REPETIR USUARIO
+	=============================================*/	
+
+	public $validarUsuario;
+
+	public function ajaxValidarUsuario(){
+
+		$item = "usuario";
+		$valor = $this->validarUsuario;
+
+		$respuesta = ControladorAdministradores::ctrMostrarAdministradores($item, $valor);
+
+		echo json_encode($respuesta);
+
+    }
+
+	/*=============================================
 	Eliminar Administrador
 	=============================================*/	
 
@@ -82,6 +99,18 @@ if(isset($_POST["estadoAdmin"])){
 	$activarAdmin -> idAdmin = $_POST["idAdmin"];
 	$activarAdmin -> estadoAdmin = $_POST["estadoAdmin"];
 	$activarAdmin -> ajaxActivarAdministrador();
+
+}
+
+/*=============================================
+VALIDAR NO REPETIR USUARIO
+=============================================*/
+
+if(isset( $_POST["validarUsuario"])){
+
+	$valUsuario = new AjaxAdministadores();
+	$valUsuario -> validarUsuario = $_POST["validarUsuario"];
+	$valUsuario -> ajaxValidarUsuario();
 
 }
 

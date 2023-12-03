@@ -18,12 +18,19 @@
         <div class="left-header col horizontal-wrapper ps-0">
         <ul class="horizontal-menu">
             <li class="mega-menu outside">
-                <a class="nav-link" href="#!"><i data-feather="layers"></i><span>Salas de Computo</span></a>
+                <a class="nav-link" href="#!"><i data-feather="layers"></i><span>Instituto Técnologico de Istmo</span></a>
             </li>
         </ul>
         </div>
         <div class="nav-right col-8 pull-right right-header p-0">
         <ul class="nav-menus">
+            <?php
+            if($admin["perfil"] == "Administrador") : ?>
+            <li class="onhover-dropdown">
+              <a href="reporte-fallas"><div class="notification-box" style="color:#fff"><img src="public/assets/images/bell.svg"> </i><span class="badge rounded-pill badge-secondary"><?php echo count($rnv); ?> </span></div></a>
+            </li>
+            <?php endif ?>
+
             <li class="profile-nav onhover-dropdown p-0 me-0">
             <div class="media profile-media"><img class="b-r-10" src="public/assets/images/dashboard/profile.png" alt="">
                 <div class="media-body"><span class="fb"><?= $admin["nombre"]?></span>

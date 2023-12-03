@@ -85,8 +85,8 @@
 <div class="modal fade" id="crearAdministrador" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <h5 class="modal-title">Crear nuevo administrador</h5>
+      <div class="modal-header color-blue">
+        <h5 class="modal-title">NUEVO ADMINISTRADOR</h5>
         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" id="formGuardarAdministrador">   
@@ -103,7 +103,7 @@
                   <div class="mb-3 m-form__group">
                       <label class="form-label">Usuario</label>
                       <div class="input-group"><span class="input-group-text"> <i data-feather="user-check"></i> </span>
-                        <input type="text" class="form-control" name="registroUsuario" placeholder="Ingresa el usuario" autocomplete="off" required>   
+                        <input type="text" class="form-control" name="registroUsuario" id="nuevoUsuario" placeholder="Ingresa el usuario" autocomplete="off" required>   
                       </div>
                   </div>
                   <div class="mb-3 m-form__group">
@@ -118,8 +118,6 @@
                         <select class="form-control" name="registroPerfil" required>
                           <option value="">Seleccione un perfil</option>
                           <option value="Administrador">Administrador</option>
-                          <option value="Jefe de Area">Jefe de Área</option>
-                          <option value="Docente">Docente</option>
                         </select>
                       </div>
                   </div>  
@@ -128,8 +126,8 @@
           </div>               
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
-          <button class="btn btn-primary" type="submit">Guardar</button>
+          <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cerrar</button>
+          <button class="btn color-blue" type="submit">Guardar</button>
         </div>
 
       </form>
@@ -141,8 +139,8 @@
 <div class="modal fade" id="editarAdministrador" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <h5 class="modal-title">Editar administrador</h5>
+      <div class="modal-header color-blue">
+        <h5 class="modal-title">EDITAR ADMINISTRADOR</h5>
         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" id="formEditarAdministrador">   
@@ -176,8 +174,6 @@
                         <select class="form-control" name="editarPerfil" required>
                           <option class="editarPerfilOption"></option>
                           <option value="Administrador">Administrador</option>
-                          <option value="Jefe de Area">Jefe de Área</option>
-                          <option value="Docente">Docente</option>
                         </select>
                       </div>
                   </div>  
@@ -186,8 +182,8 @@
           </div>               
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
-          <button class="btn btn-primary" type="submit">Guardar</button>
+          <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cerrar</button>
+          <button class="btn color-blue" type="submit">Guardar</button>
         </div>
 
       </form>
@@ -388,5 +384,42 @@ $(document).on("click", ".eliminarAdministrador", function(){
 
 })
 
+})
+
+/*=============================================
+REVISAR SI EL USUARIO YA ESTÁ REGISTRADO
+=============================================*/
+
+$("#prueba").change(function(){
+
+$(".alert").remove();
+
+var usuario = $(this).val();
+
+var datos = new FormData();
+datos.append("validarUsuario", usuario);
+
+ $.ajax({
+    url:"public/assets/ajax/administradores/administradores.ajax.php",
+    method:"POST",
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType: "json",
+    success:function(respuesta){
+      console.log(respuesta)
+
+      if(respuesta){
+
+        $("#nuevoUsuario").parent().after('<div class="alert alert-danger">Este usuario ya existe en la base de datos</div>');
+
+        $("#nuevoUsuario").val("");
+
+      }
+
+    }
+
+})
 })
 </script>

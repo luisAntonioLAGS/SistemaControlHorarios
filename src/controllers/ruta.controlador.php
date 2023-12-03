@@ -4,14 +4,9 @@ class ControladorRuta{
 
 	static public function ctrRuta(){
 
-		return "http://localhost/sistema-control-horarios/";
+		return "http://localhost/itistmo/";
 
 	}
 
-	static public function ctrRutaBackend(){
-
-		return "http://localhost/sistema-control-horarios/";
-
-	}
-
+	
 }

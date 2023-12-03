@@ -8,7 +8,7 @@ class Conexion
 
         $link = new PDO(
             "mysql:host=localhost;
-            dbname=salacomputo",
+            dbname=itistmo",
             "root",
             ""
         );

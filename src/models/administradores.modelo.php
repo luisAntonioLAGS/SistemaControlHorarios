@@ -124,6 +124,7 @@ class ModeloAdministradores{
 
 	}
 
+
 	/*=============================================
 	Activar o Desactivar Administrador
 	=============================================*/

@@ -1,3 +1,13 @@
+<?php
+  if($admin["perfil"] !== "Administrador"){
+    echo '<script>
+
+      window.location = "error404";
+
+    </script>';
+  }
+?>
+
 <div class="page-body">
   <div class="container-fluid">
     <div class="page-title">
@@ -32,6 +42,7 @@
                     <th>Nombre</th>
                     <th>Carrera</th>
                     <th>Cedula</th>
+                    <th>Email</th>
                     <th>Detalles</th>
                     
                   </tr>
@@ -54,6 +65,7 @@
                     <td><?= $value["nombre"] ?></td>
                     <td><?= $value["carrera"] ?></td>
                     <td><?= $value["cedula"] ?></td>
+                    <td><?= $value["email"] ?></td>
                     <td><?= $actions ?></td>
                    
                     
@@ -74,8 +86,8 @@
 <div class="modal fade" id="crearDocente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <h5 class="modal-title">Crear Nuevo Docente</h5>
+      <div class="modal-header color-blue">
+        <h5 class="modal-title">NUEVO DOCENTE</h5>
         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" id="formGuardarDocente">   
@@ -86,7 +98,7 @@
                   <div class="mb-3 m-form__group">
                       <label class="form-label">Cedula</label>
                       <div class="input-group"><span class="input-group-text"> <i data-feather="list"></i> </span>
-                        <input type="text" class="form-control" name="cedula" placeholder="Cedula" autocomplete="off" required>
+                        <input type="number" class="form-control" name="cedula" id="nuevaCedula" placeholder="Cedula" autocomplete="off" required>
                       </div>
                   </div>
                   <div class="mb-3 m-form__group">
@@ -107,14 +119,20 @@
                       <input type="text" class="form-control" name="carrera" placeholder="Carrera" autocomplete="off" required>
                     </div>
                   </div>   
+                  <div class="mb-3 m-form__group">
+                    <label class="form-label">Correo Electrónico</label>
+                    <div class="input-group"><span class="input-group-text"> <i data-feather="mail"></i> </span>
+                      <input type="email" class="form-control" name="email" placeholder="Correo Electrónico" autocomplete="off" required>
+                    </div>
+                  </div>  
                   
               </div>
             </div>
           </div>               
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
-          <button class="btn btn-primary" type="submit">Guardar</button>
+          <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cerrar</button>
+          <button class="btn color-blue" type="submit">Guardar</button>
         </div>
 
       </form>
@@ -126,8 +144,8 @@
 <div class="modal fade" id="editarDocente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-primary">
-        <h5 class="modal-title">Editar Docente</h5>
+      <div class="modal-header color-blue">
+        <h5 class="modal-title">EDITAR DOCENTE</h5>
         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" id="formEditarDocente">   
@@ -138,7 +156,7 @@
                   <div class="mb-3 m-form__group">
                       <label class="form-label">Cedula</label>
                       <div class="input-group"><span class="input-group-text"> <i data-feather="list"></i> </span>
-                        <input type="text" class="form-control" name="cedulaEditar" placeholder="Cedula" autocomplete="off" required>
+                        <input type="number" class="form-control" name="cedulaEditar" placeholder="Cedula" autocomplete="off" required>
                         <input type="hidden" class="form-control" name="idEditar" autocomplete="off" required>
                       </div>
                   </div>
@@ -160,14 +178,20 @@
                       <input type="text" class="form-control" name="carreraEditar" placeholder="Carrera" autocomplete="off" required>
                     </div>
                   </div>   
+                  <div class="mb-3 m-form__group">
+                    <label class="form-label">Correo Electrónico</label>
+                    <div class="input-group"><span class="input-group-text"> <i data-feather="mail"></i> </span>
+                      <input type="email" class="form-control" name="emailEditar" placeholder="Correo Electrónico" autocomplete="off" required>
+                    </div>
+                  </div>  
                   
               </div>
             </div>
           </div>               
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
-          <button class="btn btn-primary" type="submit">Guardar</button>
+          <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cerrar</button>
+          <button class="btn color-blue" type="submit">Guardar</button>
         </div>
 
       </form>
@@ -244,6 +268,7 @@ $(document).on("click", ".editarDocente", function(){
       $('input[name="nombreEditar"]').val(respuesta["nombre"]);
       $('input[name="tituloEditar"]').val(respuesta["titulo"]);
       $('input[name="carreraEditar"]').val(respuesta["carrera"]);
+      $('input[name="emailEditar"]').val(respuesta["email"]);
     
 
     }
@@ -355,5 +380,41 @@ $(document).on("click", ".eliminarDocente", function(){
 
 })
 
+})
+
+/*=============================================
+REVISAR SI EL DOCENTE YA ESTÁ REGISTRADO
+=============================================*/
+
+$("#nuevaCedula").change(function(){
+
+$(".alert").remove();
+
+var cedula = $(this).val();
+
+var datos = new FormData();
+datos.append("validarCedula", cedula);
+
+ $.ajax({
+    url:"public/assets/ajax/docentes/docentes.ajax.php",
+    method:"POST",
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType: "json",
+    success:function(respuesta){
+
+      if(respuesta){
+
+        $("#nuevaCedula").parent().after('<div class="alert alert-danger">Esta cedula ya existe en la base de datos</div>');
+
+        $("#nuevaCedula").val("");
+
+      }
+
+    }
+
+})
 })
 </script>

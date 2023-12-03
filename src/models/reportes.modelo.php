@@ -38,6 +38,26 @@ class ModeloReportes{
 	}
 
 	/*=============================================
+	Mostrar Total de Reportes
+	=============================================*/
+
+	static public function mdlMostrarTotalReportes($datos){
+
+
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM reportes_fallas WHERE visto = '$datos'");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt-> close();
+
+		$stmt = null;
+
+
+	}
+
+	/*=============================================
 	Mostrar Mis Reportes
 	=============================================*/
 
@@ -85,16 +105,13 @@ class ModeloReportes{
 	}
 
 	/*=============================================
-	Editar Sala
+	Ver Reportes
 	=============================================*/
 
-	static public function mdlEditarSala($datos){
+	static public function mdlVerReportes(){
 
-		$sala = $datos["sala"];
-		$estado = $datos["estado"];
-		$id = $datos["id"];
-
-		$stmt = Conexion::conectar()->prepare("UPDATE salas SET status = '$estado' WHERE id = '$id'");
+		
+		$stmt = Conexion::conectar()->prepare("UPDATE reportes_fallas SET visto = 'si' ");
 
 		if($stmt->execute()){
 
@@ -112,29 +129,5 @@ class ModeloReportes{
 
 	}
 
-
-	/*=============================================
-	Eliminar Sala
-	=============================================*/
-
-	static public function mdlEliminarSala($id){
-
-		$stmt = Conexion::conectar()->prepare("DELETE FROM salas WHERE id = '$id'");
-
-		if($stmt->execute()){
-
-			return "ok";	
-
-		}else{
-
-			return "error";
-		
-		}
-
-		$stmt->close();
-		
-		$stmt = null;
-
-	}
 
 }

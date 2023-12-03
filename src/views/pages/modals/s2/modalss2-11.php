@@ -60,11 +60,11 @@
                   <div class="mb-3 m-form__group">
                     <label class="form-label">Profesor</label>
                     <div class="input-group"><span class="input-group-text"> <i class="fas fa-user"></i> </span>
-                      <select class="form-control" name="profesor" required>
-                        <option value="">Selecione un profesor</option>
+<select class="form-control" name="docente" required>
+                        <option value="">Seleccione un Docente</option>
                         <?php
-                          $profesores = ControladorAdministradores::ctrMostrarAdministradoresDocentes("perfil", "Docente");
-                          foreach ($profesores as $key => $value) : ?>
+                          $docentes = ControladorDocentes::ctrMostrarDocentes(null, null);
+                          foreach ($docentes as $key => $value) : ?>
                           <option value="<?= $value["id"] ?>"> <?= $value["nombre"] ?></option>
                         <?php endforeach ?>
                       </select>
@@ -145,11 +145,11 @@
                   <div class="mb-3 m-form__group">
                     <label class="form-label">Profesor</label>
                     <div class="input-group"><span class="input-group-text"> <i class="fas fa-user"></i> </span>
-                      <select class="form-control" name="profesor" required>
-                        <option value="">Selecione un profesor</option>
+<select class="form-control" name="docente" required>
+                        <option value="">Seleccione un Docente</option>
                         <?php
-                          $profesores = ControladorAdministradores::ctrMostrarAdministradoresDocentes("perfil", "Docente");
-                          foreach ($profesores as $key => $value) : ?>
+                          $docentes = ControladorDocentes::ctrMostrarDocentes(null, null);
+                          foreach ($docentes as $key => $value) : ?>
                           <option value="<?= $value["id"] ?>"> <?= $value["nombre"] ?></option>
                         <?php endforeach ?>
                       </select>
@@ -230,11 +230,11 @@
                   <div class="mb-3 m-form__group">
                     <label class="form-label">Profesor</label>
                     <div class="input-group"><span class="input-group-text"> <i class="fas fa-user"></i> </span>
-                      <select class="form-control" name="profesor" required>
-                        <option value="">Selecione un profesor</option>
+                      <select class="form-control" name="docente" required>
+                        <option value="">Seleccione un Docente</option>
                         <?php
-                          $profesores = ControladorAdministradores::ctrMostrarAdministradoresDocentes("perfil", "Docente");
-                          foreach ($profesores as $key => $value) : ?>
+                          $docentes = ControladorDocentes::ctrMostrarDocentes(null, null);
+                          foreach ($docentes as $key => $value) : ?>
                           <option value="<?= $value["id"] ?>"> <?= $value["nombre"] ?></option>
                         <?php endforeach ?>
                       </select>
@@ -315,11 +315,11 @@
                   <div class="mb-3 m-form__group">
                     <label class="form-label">Profesor</label>
                     <div class="input-group"><span class="input-group-text"> <i class="fas fa-user"></i> </span>
-                      <select class="form-control" name="profesor" required>
-                        <option value="">Selecione un profesor</option>
+<select class="form-control" name="docente" required>
+                        <option value="">Seleccione un Docente</option>
                         <?php
-                          $profesores = ControladorAdministradores::ctrMostrarAdministradoresDocentes("perfil", "Docente");
-                          foreach ($profesores as $key => $value) : ?>
+                          $docentes = ControladorDocentes::ctrMostrarDocentes(null, null);
+                          foreach ($docentes as $key => $value) : ?>
                           <option value="<?= $value["id"] ?>"> <?= $value["nombre"] ?></option>
                         <?php endforeach ?>
                       </select>
@@ -400,11 +400,11 @@
                   <div class="mb-3 m-form__group">
                     <label class="form-label">Profesor</label>
                     <div class="input-group"><span class="input-group-text"> <i class="fas fa-user"></i> </span>
-                      <select class="form-control" name="profesor" required>
-                        <option value="">Selecione un profesor</option>
+<select class="form-control" name="docente" required>
+                        <option value="">Seleccione un Docente</option>
                         <?php
-                          $profesores = ControladorAdministradores::ctrMostrarAdministradoresDocentes("perfil", "Docente");
-                          foreach ($profesores as $key => $value) : ?>
+                          $docentes = ControladorDocentes::ctrMostrarDocentes(null, null);
+                          foreach ($docentes as $key => $value) : ?>
                           <option value="<?= $value["id"] ?>"> <?= $value["nombre"] ?></option>
                         <?php endforeach ?>
                       </select>

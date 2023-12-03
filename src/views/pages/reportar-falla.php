@@ -40,7 +40,11 @@
 
                     foreach ($reportes as $key => $value):
 
-                      $docente = ControladorAdministradores::ctrMostrarAdministradores("id", $idDocente);
+                      $dato = $value["fecha"];
+                      $fecha = date('d/m/Y', strtotime($dato));
+                      $hora = date('h:i:s', strtotime($dato));
+
+                      $docente = ControladorDocentes::ctrMostrarDocentes("id", $idDocente);
 
                     $actions = '<div class="btn-group btn-group-pill" role="group">
                       <button class="btn btn-warning editarEquipo" idEquipo="'.$value["id"].'" type="button" data-bs-toggle="modal" data-bs-target="#editarEquipo" data-whatever="@getbootstrap">Editar</button>
@@ -53,7 +57,7 @@
 
                   <tr>
                     <td><?= ($key + 1) ?> </td>
-                    <td><?= $value["fecha"] ?></td>
+                    <td><?= $fecha ." ". $hora ?></td>
                     <td><?= $value["reporte"] ?></td>
                   </tr>
 

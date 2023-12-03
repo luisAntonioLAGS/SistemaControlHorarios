@@ -17,11 +17,14 @@
   <!-- Container-fluid starts-->
   <div class="container-fluid">
     <div class="row">
-      <!-- clientes -->
-      <?php include_once "src/views/components/widgets.php"; ?>
-
-      <!-- ventas -->
-      
+      <!-- widgets -->
+      <?php
+        if($admin["perfil"] == "Administrador"){
+          include_once "src/views/components/widgets.php";
+        }else{
+          include_once "src/views/components/widgets-docentes.php";
+        }
+      ?>
     </div>
   </div>
 </div>

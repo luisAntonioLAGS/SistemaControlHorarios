@@ -1,6 +1,6 @@
 <!-- loader starts-->
 <div class="loader-wrapper">
-    <div class="loader-index"><span></span></div>
+    <!-- <div class="loader-index"><span></span></div> -->
     <svg>
     <defs></defs>
     <filter id="goo">

@@ -1,3 +1,4 @@
+
 <div class="page-body">
   <div class="container-fluid">
     <div class="page-title">
@@ -37,8 +38,14 @@
                   </tr>
                 </thead>
 
-                <?php
+                <?php if($admin["perfil"] == "Administrador") {
                   require_once "hora-s2.php";
+                }elseif($admin["perfil"] == "Docente") {
+                  require_once "hora-s2-docente.php";
+                }
+                ?>
+
+                <?php if($admin["perfil"] == "Administrador") {
                   require_once "modals/s2/modalss2-8.php";
                   require_once "modals/s2/modalss2-9.php";
                   require_once "modals/s2/modalss2-10.php";
@@ -49,6 +56,7 @@
                   require_once "modals/s2/modalss2-15.php";
                   require_once "modals/s2/modalss2-16.php";
                   require_once "modals/s2/modalss2-17.php";
+                }
                 ?>
 
                 <tbody style="text-align: center">
@@ -443,6 +451,92 @@
 </div>
 
 
+<!-- MODAL EDITAR HORARIO -->
+<div class="modal fade" id="editarS2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title">EDITAR HORARIO</h5>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" id="formEditarHorarioS2">   
+        <div class="modal-body">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                  <div class="mb-3 m-form__group">
+                      <label class="form-label">Sala</label>
+                      <div class="input-group"><span class="input-group-text"> <i style="font-size:18px" class="fas fa-laptop-house"></i> </span>
+                        <input type="text" class="form-control" name="salaEditar"  id="salaEditar" value="Sala 1" autocomplete="off" required readonly>
+                        <input type="hidden" class="form-control" name="idHorarioEditar" id="idHorarioEditar" autocomplete="off" required>
+                      </div>
+                  </div>
+                  
+                  <div class="mb-3 m-form__group">
+                    <label class="form-label">Dia</label>
+                    <div class="input-group"><span class="input-group-text"> <i class="fas fa-calendar"></i> </span>
+                    <input type="text" class="form-control" name="diaEditar" id="diaEditar"  autocomplete="off" value="Jueves" required readonly>
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3 m-form__group">
+                    <label class="form-label">Hora Entrada</label>
+                    <div class="input-group"><span class="input-group-text"> <i style="font-size:18px" class="fas fa-clock"></i> </span>
+                      <input type="time" class="form-control" name="horaEditar" id="horaEditar" autocomplete="off" required readonly>
+                    </div>
+                  </div>
+
+                  <div class="mb-3 m-form__group">
+                    <label class="form-label">Hora Salida</label>
+                    <div class="input-group"><span class="input-group-text"> <i style="font-size:18px" class="fas fa-clock"></i> </span>
+                      <input type="time" class="form-control" name="horasEditar" id="horasEditar" autocomplete="off" required readonly>
+                    </div>
+                  </div>
+
+                  <div class="mb-3 m-form__group">
+                    <label class="form-label">Materia</label>
+                    <div class="input-group"><span class="input-group-text"> <i class="fas fa-check-circle"></i> </span>
+                      <select class="form-control" name="editarMateria" required>
+                        <option id="editarMateria"></option>
+                        <?php
+                          $materias = ControladorMaterias::ctrMostrarMaterias(null, null);
+                          foreach ($materias as $key => $value) {
+                            echo '<option value="' . $value["id"] . '">' . $value["materia"] . '</option>';
+                          }
+                        ?>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="mb-3 m-form__group">
+                    <label class="form-label">Docente</label>
+                    <div class="input-group"><span class="input-group-text"> <i class="fas fa-user"></i> </span>
+                      <select class="form-control" name="editarDocente" required>
+                        <option id="editarDocente"></option>
+                        <?php
+                          $docentes = ControladorDocentes::ctrMostrarDocentes(null, null);
+                          foreach ($docentes as $key => $value) : ?>
+                          <option value="<?= $value["id"] ?>"> <?= $value["nombre"] ?></option>
+                        <?php endforeach ?>
+                      </select>
+                    </div>
+                  </div>
+
+              </div>
+            </div>
+          </div>               
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
+          <button class="btn btn-primary" type="submit">Guardar</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+
 <script src="public/assets/js/pages/s2/S2-8.js"></script>
 <script src="public/assets/js/pages/s2/S2-9.js"></script>
 <script src="public/assets/js/pages/s2/S2-10.js"></script>
@@ -453,3 +547,5 @@
 <script src="public/assets/js/pages/s2/S2-15.js"></script>
 <script src="public/assets/js/pages/s2/S2-16.js"></script>
 <script src="public/assets/js/pages/s2/S2-17.js"></script>
+
+<script src="public/assets/js/pages/options/s2.js"></script>

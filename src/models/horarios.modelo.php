@@ -8,7 +8,7 @@ class ModeloHorarios{
 	Mostrar Horario
 	=============================================*/
 
-	static public function mdlMostrarHorario($item, $valor){
+	static public function mdlMostrarHorarios($item, $valor){
 
 		if($item != null){
 
@@ -64,11 +64,11 @@ class ModeloHorarios{
 
 	static public function mdlRegistroHorario($datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO horarios (id_sala, id_materia, id_profesor, dia, hora_inicio, hora_fin) VALUES (:idSala, :materia, :profesor, :dia, :horaInicio, :horaSalida)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO horarios (id_sala, id_materia, id_docente, dia, hora_inicio, hora_fin) VALUES (:idSala, :materia, :docente, :dia, :horaInicio, :horaSalida)");
 
 		$stmt->bindParam(":idSala", $datos["idSala"], PDO::PARAM_STR);
 		$stmt->bindParam(":materia", $datos["materia"], PDO::PARAM_STR);
-		$stmt->bindParam(":profesor", $datos["profesor"], PDO::PARAM_STR);
+		$stmt->bindParam(":docente", $datos["docente"], PDO::PARAM_STR);
 		$stmt->bindParam(":dia", $datos["dia"], PDO::PARAM_STR);
 		$stmt->bindParam(":horaInicio", $datos["horaInicio"], PDO::PARAM_STR);
 		$stmt->bindParam(":horaSalida", $datos["horaSalida"], PDO::PARAM_STR);
@@ -90,16 +90,16 @@ class ModeloHorarios{
 	}
 
 	/*=============================================
-	Editar Sala
+	Editar Horario
 	=============================================*/
 
-	static public function mdlEditarSala($datos){
+	static public function mdlEditarHorario($datos){
 
-		$sala = $datos["sala"];
-		$estado = $datos["estado"];
+		$materia = $datos["materia"];
+		$docente = $datos["docente"];
 		$id = $datos["id"];
 
-		$stmt = Conexion::conectar()->prepare("UPDATE salas SET status = '$estado' WHERE id = '$id'");
+		$stmt = Conexion::conectar()->prepare("UPDATE horarios SET id_docente = '$docente', id_materia = '$materia'  WHERE id = '$id'");
 
 		if($stmt->execute()){
 
@@ -119,12 +119,12 @@ class ModeloHorarios{
 
 
 	/*=============================================
-	Eliminar Sala
+	Eliminar Horario
 	=============================================*/
 
-	static public function mdlEliminarSala($id){
+	static public function mdlEliminarHorario($id){
 
-		$stmt = Conexion::conectar()->prepare("DELETE FROM salas WHERE id = '$id'");
+		$stmt = Conexion::conectar()->prepare("DELETE FROM horarios WHERE id = '$id'");
 
 		if($stmt->execute()){
 

@@ -6,7 +6,8 @@ $datos = array(
    "cedula"  => $_POST["cedula"],
    "nombre"      => $_POST["nombre"],
    "titulo"      => $_POST["titulo"],
-   "carrera"      => $_POST["carrera"]
+   "carrera"      => $_POST["carrera"],
+   "email"      => $_POST["email"]
 );
 
 $guardar = new ControladorDocentes();

@@ -8,7 +8,7 @@ $datos = array(
    "horaInicio"      => $_POST["hora"],
    "horaSalida"      => $_POST["horas"],
    "materia"      => $_POST["materia"],
-   "profesor"      => $_POST["profesor"]
+   "docente"      => $_POST["docente"]
 );
 
 $guardar = new ControladorHorarios();

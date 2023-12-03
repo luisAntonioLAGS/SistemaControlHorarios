@@ -1,3 +1,4 @@
+
 <div class="page-body">
   <div class="container-fluid">
     <div class="page-title">
@@ -37,8 +38,14 @@
                   </tr>
                 </thead>
 
-                <?php
+                <?php if($admin["perfil"] == "Administrador") {
                   require_once "hora-s1.php";
+                }elseif($admin["perfil"] == "Docente") {
+                  require_once "hora-s1-docente.php";
+                }
+                ?>
+
+                <?php if($admin["perfil"] == "Administrador") {
                   require_once "modals/s1/modalss1-8.php";
                   require_once "modals/s1/modalss1-9.php";
                   require_once "modals/s1/modalss1-10.php";
@@ -49,6 +56,7 @@
                   require_once "modals/s1/modalss1-15.php";
                   require_once "modals/s1/modalss1-16.php";
                   require_once "modals/s1/modalss1-17.php";
+                }
                 ?>
 
                 <tbody style="text-align: center">
@@ -72,7 +80,8 @@
                       <?php if ($respS1Miercoles8 == "0"): ?>
                           <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#S1Miercoles8" data-whatever="@getbootstrap"><i data-feather="clock"></i></button>
                         <?php else : ?>
-                          <?= $respS1Miercoles8; ?> 
+                          <?= $respS1Miercoles8; ?> </br> 
+                         
                       <?php endif ?>
                     </td>
                     <td> 
@@ -442,63 +451,78 @@
   </div>
 </div>
 
-<!-- MODAL EDITAR SALA -->
-<div class="modal fade" id="editarEquipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- MODAL EDITAR HORARIO -->
+<div class="modal fade" id="editarS1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header bg-primary">
-        <h5 class="modal-title">Editar Equipo</h5>
+        <h5 class="modal-title">EDITAR HORARIO</h5>
         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="post" id="formEditarEquipo">   
+      <form method="post" id="formEditarHorarioS1">   
         <div class="modal-body">
           <div class="card-body">
             <div class="row">
               <div class="col-md-12">
                   <div class="mb-3 m-form__group">
-                      <label class="form-label">Equipo</label>
-                      <div class="input-group"><span class="input-group-text"> <i class="fas fa-laptop"></i> </span>
-                        <input type="text" class="form-control" name="editarEquipo" placeholder="Equipo" autocomplete="off" required>
-                        <input type="hidden" class="form-control" name="editarId" required>
+                      <label class="form-label">Sala</label>
+                      <div class="input-group"><span class="input-group-text"> <i style="font-size:18px" class="fas fa-laptop-house"></i> </span>
+                        <input type="text" class="form-control" name="salaEditar"  id="salaEditar" value="Sala 1" autocomplete="off" required readonly>
+                        <input type="hidden" class="form-control" name="idHorarioEditar" id="idHorarioEditar" autocomplete="off" required>
                       </div>
                   </div>
-                
-                  <div class="mb-3 m-form__group">
-                      <label class="form-label">Sala</label>
-                      <div class="input-group"><span class="input-group-text"> <i class="fas fa-laptop-house"></i> </span>
-                        <select class="form-control" name="editarSala" required>
-                          <option class="editarSalaOption"></option>
-                          <?php
-                            $sala = ControladorSalas::ctrMostrarSalas(null, null);
-                            foreach ($sala as $key => $value) : 
-                          ?>
-                          <option value="<?= $value["id"] ?>"> <?= $value["sala"] ?> </option>
-                          <?php endforeach ?>
-                        </select>
-                      </div>
-                  </div> 
                   
                   <div class="mb-3 m-form__group">
-                      <label class="form-label">Estado</label>
-                      <div class="input-group"><span class="input-group-text"> <i class="fas fa-check-circle"></i> </span>
-                        <select class="form-control" name="editarEstado" required>
-                          <option class="editarEstadoOption"></option>
-                          <option value="Operativo">Operativo</option>
-                          <option value="Inoperativo">Inoperativo</option>
-                        </select>
-                      </div>
-                  </div>  
+                    <label class="form-label">Dia</label>
+                    <div class="input-group"><span class="input-group-text"> <i class="fas fa-calendar"></i> </span>
+                    <input type="text" class="form-control" name="diaEditar" id="diaEditar"  autocomplete="off" value="Jueves" required readonly>
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3 m-form__group">
+                    <label class="form-label">Hora Entrada</label>
+                    <div class="input-group"><span class="input-group-text"> <i style="font-size:18px" class="fas fa-clock"></i> </span>
+                      <input type="time" class="form-control" name="horaEditar" id="horaEditar" autocomplete="off" required readonly>
+                    </div>
+                  </div>
 
                   <div class="mb-3 m-form__group">
-                      <label class="form-label">Observación</label>
-                      <div class="input-group"><span class="input-group-text"> <i class="fas fa-align-center"></i> </span>
-                        <input type="text" class="form-control" name="editarObservacion" placeholder="Observacion" autocomplete="off">
-                      </div>
-                  </div>  
+                    <label class="form-label">Hora Salida</label>
+                    <div class="input-group"><span class="input-group-text"> <i style="font-size:18px" class="fas fa-clock"></i> </span>
+                      <input type="time" class="form-control" name="horasEditar" id="horasEditar" autocomplete="off" required readonly>
+                    </div>
+                  </div>
+
+                  <div class="mb-3 m-form__group">
+                    <label class="form-label">Materia</label>
+                    <div class="input-group"><span class="input-group-text"> <i class="fas fa-check-circle"></i> </span>
+                      <select class="form-control" name="editarMateria" required>
+                        <option id="editarMateria"></option>
+                        <?php
+                          $materias = ControladorMaterias::ctrMostrarMaterias(null, null);
+                          foreach ($materias as $key => $value) {
+                            echo '<option value="' . $value["id"] . '">' . $value["materia"] . '</option>';
+                          }
+                        ?>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="mb-3 m-form__group">
+                    <label class="form-label">Docente</label>
+                    <div class="input-group"><span class="input-group-text"> <i class="fas fa-user"></i> </span>
+                      <select class="form-control" name="editarDocente" required>
+                        <option id="editarDocente"></option>
+                        <?php
+                          $docentes = ControladorDocentes::ctrMostrarDocentes(null, null);
+                          foreach ($docentes as $key => $value) : ?>
+                          <option value="<?= $value["id"] ?>"> <?= $value["nombre"] ?></option>
+                        <?php endforeach ?>
+                      </select>
+                    </div>
+                  </div>
 
               </div>
-
-              
             </div>
           </div>               
         </div>
@@ -523,3 +547,5 @@
 <script src="public/assets/js/pages/s1/s1-15.js"></script>
 <script src="public/assets/js/pages/s1/s1-16.js"></script>
 <script src="public/assets/js/pages/s1/s1-17.js"></script>
+
+<script src="public/assets/js/pages/options/s1.js"></script>

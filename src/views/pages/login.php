@@ -21,132 +21,65 @@
                                 </div>
                             </div>
                             <div class="form-group mb-0">
-                                <button class="btn btn-primary btn-block w-100" type="submit">Entrar</button>
+                                <button class="btn bg-orange-iti btn-block w-100" type="submit">Entrar</button>
                             </div>
+
+                            <p class="mt-4 mb-0 text-center ">¿Olvidó su contraseña?<a class="ms-2 text-recuperar" data-bs-toggle="modal" data-bs-target="#recuperarPassword" data-whatever="@getbootstrap">Recuperela aquí.</a></p>
 
                             <?php
-                                $ingreso = new ControladorAdministradores();
-                                $ingreso -> ctrIngresoAdministradores(); 
-					        ?>
-                        </form>
-                    </div>
-
-                    <div class="login-main hidden" id="formAdmin"> 
-                        <form class="theme-form" method="post">
-                            <h4>Bienvenido</h4>
-                            <p>Ingrese su usuario y contraseña para iniciar sesión</p>
-                            <div class="form-group">
-                                <label class="col-form-label">Usuario</label>
-                                <input class="form-control" type="text" name="ingresoUsuario" placeholder="Usuario" autofocus autocomplete="off" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-form-label">Contraseña</label>
-                                <div class="form-input position-relative">
-                                    <input class="form-control" type="password" name="ingresoPassword" required placeholder="contraseña">
-                                </div>
-                            </div>
-                            <div class="form-group mb-0">
-                                <button class="btn btn-primary btn-block w-100" type="submit">Entrar</button>
-                            </div>
-
-                            <?php
-                                $ingreso = new ControladorAdministradores();
-                                $ingreso -> ctrIngresoAdministradores(); 
-					        ?>
+                              $ingreso = new ControladorAdministradores();
+                              $ingreso -> ctrIngresoAdministradores(); 
+					                  ?>
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>   
 </div>
 
-<script>
-    /*=============================================
-    REVISAR SI EL CLIENTE YA ESTÁ REGISTRADO
-    =============================================*/
-
-    const buscarDni = async (dni) => {
-
-    const idCliente = document.getElementById("idCliente");
-    const card = document.querySelector(".card-cliente");
-  
-    const url = await fetch(`public/assets/ajax/clientes/buscar-cliente.php?dni=${dni}`);
-    const resp = await url.json();
-
-    if(resp.ok ===  true & resp.estado === "Activo"){
-
-        idCliente.value = resp.id;
-
-        card.innerHTML = `
-        <div class="col-12">
-            <div class="card">
-                <div class="product-box">
-                    <div class="product-img">
-                        <div class="ribbon ribbon-success ribbon-right">ACTIVO</div><img class="img-fluid" src="${resp.foto}" alt=""></div>
-                        <div class="product-details"> 
-                            <h4>${resp.nombre} ${resp.apellido}</h4>
-                        </div>
-                    </div>
-                </div>
+<!-- MODAL RECUPERAR CONTRASEÑA -->
+<div class="modal fade" id="recuperarPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header color-blue">
+        <h5 class="modal-title">RECUPERAR CONTRASEÑA</h5>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" id="formRecuperarPassword">   
+        <div class="modal-body">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                  <div class="mb-3 m-form__group">
+                      <label class="form-label">Perfil</label>
+                      <div class="input-group"><span class="input-group-text"> <i data-feather="user-check"></i> </span>
+                        <input type="text" class="form-control" name="perfil" value="Docente" readonly autocomplete="off" required>   
+                      </div>
+                  </div>
+                  <div class="mb-3 m-form__group">
+                      <label class="form-label">Correo Electrónico</label>
+                      <div class="input-group"><span class="input-group-text"> <i data-feather="mail"></i> </span>
+                        <input type="email" class="form-control" name="emailRecuperarPassword" placeholder="Email" autocomplete="off" required>   
+                      </div>
+                  </div>
+              </div>
             </div>
+          </div>               
         </div>
-     
-        `;
-        
-    } else if(resp.ok ===  true & resp.estado === "Inactivo"){
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
+          <button class="btn color-blue" type="submit">RECUPERAR CONTRASEÑA</button>
+        </div>
 
-        idCliente.value = resp.id;
+        <?php
 
-        card.innerHTML = `
-            <div class="col-12">
-                <div class="card">
-                    <div class="product-box">
-                        <div class="product-img">
-                            <div class="ribbon ribbon-danger ribbon-right">VENCIDO</div><img class="img-fluid" src="${resp.foto}" alt=""></div>
-                            <div class="product-details"> 
-                                <h4>${resp.nombre} ${resp.apellido}</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
+          $recuperarPassword = new ControladorAdministradores();
+          $recuperarPassword -> ctrRecuperarPassword();
 
-    }
-    
-    else if(resp.ok === false){
+		    ?>
 
-        idCliente.value = "";
-
-        card.innerHTML = `
-            <div class="alert alert-secondary inverse alert-dismissible fade show" role="alert"><i class="icon-thumb-down"></i>
-                <p>Oops! El código no se encuentra registrado.</p>
-                <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" data-bs-original-title="" title=""></button>
-            </div>	
-        `;
-
-    }
-
-    }
-
-    /*=============================================
-    FORMULARIOS
-    =============================================*/
-    const alumnos = document.getElementById('alumnos');
-    const administrador = document.getElementById('administrador');
-    const formAlumnos = document.getElementById('formAlumnos');
-    const formAdmin = document.getElementById('formAdmin');
-
-    alumnos.addEventListener('click', () => {
-        formAlumnos.classList.remove('hidden');
-        formAdmin.classList.add('hidden');
-    })
-
-    administrador.addEventListener('click', () => {
-        formAdmin.classList.remove('hidden');
-        formAlumnos.classList.add('hidden');
-    })
-    
-</script>
+      </form>
+    </div>
+  </div>
+</div>

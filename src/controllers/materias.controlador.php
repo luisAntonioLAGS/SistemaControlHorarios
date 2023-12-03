@@ -20,16 +20,15 @@ class ControladorMaterias{
 	Registro de Materias
 	=============================================*/
 
-	public function ctrRegistroSala($datos){
+	public function ctrRegistroMateria($datos){
 
-		if(isset($datos["registroSala"])){
+		if(isset($datos["materia"])){
 
 			$datos = array(
-				"sala" => $datos["registroSala"],
-				"estado" =>  $datos["registroEstado"]
+				"materia" => $datos["materia"]
 			);
 
-			$respuesta = ModeloSalas::mdlRegistroSala($datos);
+			$respuesta = ModeloMaterias::mdlRegistroMateria($datos);
 			
 			if($respuesta == "ok"){
 
@@ -43,21 +42,20 @@ class ControladorMaterias{
 	}
 
 	/*=============================================
-	Editar sala
+	Editar Materia
 	=============================================*/
 
-	public function ctrEditarSala($datos){
+	public function ctrEditarMateria($datos){
 
-		if(isset($datos["editarSala"])){
+		if(isset($datos["materiaEditar"])){
 
 
 			$datos = array(
-				"id"=> $datos["editarId"],
-				"sala" => $datos["editarSala"],
-				"estado" =>  $datos["editarEstado"]
+				"id"=> $datos["idEditar"],
+				"materia" => $datos["materiaEditar"]
 			);
 	
-			$respuesta = ModeloSalas::mdlEditarSala($datos);
+			$respuesta = ModeloMaterias::mdlEditarMateria($datos);
 				
 			if($respuesta == "ok"){
 
@@ -72,12 +70,12 @@ class ControladorMaterias{
 	}
 
 	/*=============================================
-	Eliminar Sala
+	Eliminar Materia
 	=============================================*/
 
-	static public function ctrEliminarSala($id){
+	static public function ctrEliminarMateria($id){
 
-		$respuesta = ModeloSalas::mdlEliminarSala($id);
+		$respuesta = ModeloMaterias::mdlEliminarMateria($id);
 
 		return $respuesta;
 

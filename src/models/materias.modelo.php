@@ -39,16 +39,15 @@ class ModeloMaterias{
 
 
 	/*=============================================
-	Registro salas
+	Registro Materias
 	=============================================*/
 
-	static public function mdlRegistroSala($datos){
+	static public function mdlRegistroMateria($datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO salas (sala, status) VALUES (:sala, :estado)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO materias (materia) VALUES (:materia)");
 
-		$stmt->bindParam(":sala", $datos["sala"], PDO::PARAM_STR);
-		$stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
-	
+		$stmt->bindParam(":materia", $datos["materia"], PDO::PARAM_STR);
+
 		if($stmt->execute()){
 
 			return "ok";	
@@ -66,16 +65,15 @@ class ModeloMaterias{
 	}
 
 	/*=============================================
-	Editar Sala
+	Editar Materia
 	=============================================*/
 
-	static public function mdlEditarSala($datos){
+	static public function mdlEditarMateria($datos){
 
-		$sala = $datos["sala"];
-		$estado = $datos["estado"];
+		$materia = $datos["materia"];
 		$id = $datos["id"];
 
-		$stmt = Conexion::conectar()->prepare("UPDATE salas SET status = '$estado' WHERE id = '$id'");
+		$stmt = Conexion::conectar()->prepare("UPDATE materias SET materia = '$materia' WHERE id = '$id'");
 
 		if($stmt->execute()){
 
@@ -95,12 +93,12 @@ class ModeloMaterias{
 
 
 	/*=============================================
-	Eliminar Sala
+	Eliminar Materia
 	=============================================*/
 
-	static public function mdlEliminarSala($id){
+	static public function mdlEliminarMateria($id){
 
-		$stmt = Conexion::conectar()->prepare("DELETE FROM salas WHERE id = '$id'");
+		$stmt = Conexion::conectar()->prepare("DELETE FROM materias WHERE id = '$id'");
 
 		if($stmt->execute()){
 

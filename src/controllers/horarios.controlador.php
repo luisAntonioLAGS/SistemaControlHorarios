@@ -43,7 +43,7 @@ class ControladorHorarios{
 				"horaInicio" =>  $datos["horaInicio"],
 				"horaSalida" =>  $datos["horaSalida"],
 				"materia" =>  $datos["materia"],
-				"profesor" =>  $datos["profesor"],
+				"docente" =>  $datos["docente"],
 			);
 
 			$respuesta = ModeloHorarios::mdlRegistroHorario($datos);
@@ -60,21 +60,14 @@ class ControladorHorarios{
 	}
 
 	/*=============================================
-	Editar sala
+	Editar Horario
 	=============================================*/
 
-	public function ctrEditarSala($datos){
+	public function ctrEditarHorario($datos){
 
-		if(isset($datos["editarSala"])){
+		if(isset($datos["id"])){
 
-
-			$datos = array(
-				"id"=> $datos["editarId"],
-				"sala" => $datos["editarSala"],
-				"estado" =>  $datos["editarEstado"]
-			);
-	
-			$respuesta = ModeloSalas::mdlEditarSala($datos);
+			$respuesta = ModeloHorarios::mdlEditarHorario($datos);
 				
 			if($respuesta == "ok"){
 
@@ -89,12 +82,12 @@ class ControladorHorarios{
 	}
 
 	/*=============================================
-	Eliminar Sala
+	Eliminar Horario
 	=============================================*/
 
-	static public function ctrEliminarSala($id){
+	static public function ctrEliminarHorario($id){
 
-		$respuesta = ModeloSalas::mdlEliminarSala($id);
+		$respuesta = ModeloHorarios::mdlEliminarHorario($id);
 
 		return $respuesta;
 

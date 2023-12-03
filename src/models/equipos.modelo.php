@@ -68,12 +68,25 @@ class ModeloEquipos{
 
 	static public function mdlRegistroEquipo($datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO equipos (equipo, id_sala, observacion, status) VALUES (:sala, :sala, :observacion, :estado)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO equipos (id_sala, equipo, serie_teclado,	modelo_teclado,	serie_mouse, modelo_mouse, serie_pantalla, modelo_pantalla,	serie_cpu, modelo_cpu, adaptador_red, ram, procesador, disco_duro, cd_rom, observacion) VALUES (:sala, :equipo, :serieTeclado, :modeloTeclado, :serieMouse, :modeloMouse, :seriePantalla, :modeloPantalla, :serieCpu, :modeloCpu, :adaptadorRed, :ram, :procesador, :disco, :cd, :observacion)");
 
 		$stmt->bindParam(":sala", $datos["sala"], PDO::PARAM_STR);
 		$stmt->bindParam(":equipo", $datos["equipo"], PDO::PARAM_STR);
+		$stmt->bindParam(":serieTeclado", $datos["serieTeclado"], PDO::PARAM_STR);
+		$stmt->bindParam(":modeloTeclado", $datos["modeloTeclado"], PDO::PARAM_STR);
+		$stmt->bindParam(":serieMouse", $datos["serieMouse"], PDO::PARAM_STR);
+		$stmt->bindParam(":modeloMouse", $datos["modeloMouse"], PDO::PARAM_STR);
+		$stmt->bindParam(":seriePantalla", $datos["seriePantalla"], PDO::PARAM_STR);
+		$stmt->bindParam(":modeloPantalla", $datos["modeloPantalla"], PDO::PARAM_STR);
+		$stmt->bindParam(":serieCpu", $datos["serieCpu"], PDO::PARAM_STR);
+		$stmt->bindParam(":modeloCpu", $datos["modeloCpu"], PDO::PARAM_STR);
+		$stmt->bindParam(":adaptadorRed", $datos["adaptadorRed"], PDO::PARAM_STR);
+		$stmt->bindParam(":ram", $datos["ram"], PDO::PARAM_STR);
+		$stmt->bindParam(":procesador", $datos["procesador"], PDO::PARAM_STR);
+		$stmt->bindParam(":disco", $datos["disco"], PDO::PARAM_STR);
+		$stmt->bindParam(":cd", $datos["cd"], PDO::PARAM_STR);
 		$stmt->bindParam(":observacion", $datos["observacion"], PDO::PARAM_STR);
-		$stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
+		
 	
 		if($stmt->execute()){
 
@@ -97,13 +110,25 @@ class ModeloEquipos{
 
 	static public function mdlEditarEquipo($datos){
 		
-		$equipo = $datos["equipo"];
-		$sala = $datos["sala"];
-		$estado = $datos["estado"];
-		$observacion = $datos["observacion"];
-		$id = $datos["id"];
+	$id =  $datos["id"];
+	$sala = $datos["sala"];
+	$equipo = $datos["equipo"];
+	$serieTeclado = $datos["serieTeclado"];
+	$modeloTeclado =  $datos["modeloTeclado"];
+	$serieMouse = $datos["serieMouse"];
+	$modeloMouse = $datos["modeloMouse"];
+	$seriePantalla = $datos["seriePantalla"];
+	$modeloPantalla = $datos["modeloPantalla"];
+	$serieCpu = $datos["serieCpu"];
+	$modeloCpu = $datos["modeloCpu"];
+	$adaptadorRed =  $datos["adaptadorRed"];
+	$ram = $datos["ram"];
+	$procesador = $datos["procesador"];
+	$disco = $datos["disco"];
+	$cd = $datos["cd"];
+	$observacion = $datos["observacion"];
 
-		$stmt = Conexion::conectar()->prepare("UPDATE equipos SET equipo = '$equipo', id_sala =' $sala', observacion = '$observacion', status = '$estado' WHERE id = '$id'");
+		$stmt = Conexion::conectar()->prepare("UPDATE equipos SET id_sala = '$sala', equipo = '$equipo', serie_teclado = '$serieTeclado', modelo_teclado = '$modeloTeclado', serie_mouse ='$serieMouse', modelo_mouse = '$modeloMouse', serie_pantalla = '$seriePantalla', modelo_pantalla = '$modeloPantalla',	serie_cpu = '$serieCpu', modelo_cpu = '$modeloCpu', adaptador_red = '$adaptadorRed', ram = '$ram', procesador = '$procesador', disco_duro = '$disco', cd_rom = '$cd', observacion = '$observacion' WHERE id = '$id'");
 
 		if($stmt->execute()){
 

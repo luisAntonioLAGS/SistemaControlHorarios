@@ -1,11 +1,21 @@
 <?php 
 @session_start();
 $ruta = ControladorRuta::ctrRuta();
-$rutaBackend = ControladorRuta::ctrRutaBackend();
 
-if(isset($_SESSION["idBackend"])){
 
+if(isset($_SESSION["idBackend"]) &&  $_SESSION["perfil"] == "Administrador" ){
 	$admin = ControladorAdministradores::ctrMostrarAdministradores("id", $_SESSION["idBackend"]);
+
+  /*=============================================
+  Reportes No Vistos
+  =============================================*/
+  $rnv = ControladorReportes::ctrMostrarTotalReportes("no");
+
+}
+else if(isset($_SESSION["idBackend"]) &&  $_SESSION["perfil"] == "Docente" ) {
+	
+	$admin = ControladorDocentes::ctrMostrarDocentes("id", $_SESSION["idBackend"]);
+
 
 }
 
@@ -16,10 +26,11 @@ if(isset($_SESSION["idBackend"])){
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#014e82">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="public/assets/images/favicon.png" type="image/x-icon">
-    <link rel="shortcut icon" href="public/assets/images/favicon.png" type="image/x-icon">
-    <title>Sistema</title>
+    <link rel="icon" href="public/assets/images/logo/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="public/assets/images/logo/logo.png" type="image/x-icon">
+    <title>Instituto Técnologico de Istmo</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
@@ -28,6 +39,7 @@ if(isset($_SESSION["idBackend"])){
     <link rel="stylesheet" type="text/css" href="public/assets/css/vendors/icofont.css">
     <!-- Themify icon-->
     <link rel="stylesheet" type="text/css" href="public/assets/css/vendors/themify.css">
+    <link rel="stylesheet" type="text/css" href="public/assets/css/font-awesome.css">
     <!-- Flag icon-->
     <link rel="stylesheet" type="text/css" href="public/assets/css/vendors/flag-icon.css">
     <!-- Feather icon-->
