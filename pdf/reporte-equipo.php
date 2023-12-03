@@ -1,5 +1,5 @@
 <?php
-require_once("dompdf/dompdf_config.inc.php");
+require_once("./dompdf/autoload.inc.php");
 use Dompdf\Dompdf;
 
 $id_cr = isset($_GET["id"]) ? (is_numeric($_GET["id"]) ? $_GET["id"] : 0) : 0;
