@@ -19,6 +19,11 @@ $sala = ControladorSalas::ctrMostrarSalas("id", $idSala);
 <head>
   <meta charset="UTF-8">
   <title>Reporte de Equipos</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
 </head>
 
 <body>
